@@ -45,17 +45,24 @@ a2= sigmoid(z2);
 a2=[ones(m,1) a2];
 z3=a2*Theta2';
 
-hTETHA=sigmoid(z3);
+hTHETA=sigmoid(z3);
 
-  for i=1:m
-    for k=1:num_labels
-      yk = (y== k);
-      hTHETAk = hTHETA(:,k);
-      J= J+(yk(i)*log(hTHETAk(i)) + (1-yk(i))*log(1-hTHETAk(i)));
-    end
-  end 
-  
-  J=-J/m
+   for i=1:m 
+     for k=1:num_labels 
+       yk = (y==k); 
+       hTHETAk = hTHETA(:,k); 
+       J= J+(yk(i)*log(hTHETAk(i)) + (1-yk(i))*log(1-hTHETAk(i))); 
+     end 
+   end  
+    
+   J=-J/m 
+   
+% Cost with regularization implementation
+
+THETAreg1 = Theta1(:,2:end);
+THETAreg2 = Theta2(:,2:end);
+
+J = (lambda/(2*m))*(sum(sum(THETAreg1.^2,2)) + sum(sum(THETAreg2.^2,2))) + J
 
 % Part 2: Implement the backpropagation algorithm to compute the gradients
 %         Theta1_grad and Theta2_grad. You should return the partial derivatives of
@@ -73,14 +80,32 @@ hTETHA=sigmoid(z3);
 %               first time.
 
 
+for t=1:m
+ %step 1 
+  a_1=a1(t,:);
+  z_2= a_1*Theta1';
+  a_2= sigmoid(z_2);
+  a_2=[ones(1,1) a_2]; 
+  z_3=a_2*Theta2'; 
+  a_3=sigmoid(z_3);
+  
+ %step2
+  for k=1:num_labels
+    delta3(k)  = a_3(k) - (y(t)==k);
+  end
+  
+ %step3
+  delta2=delta3*Theta2.*[ones(1,1) sigmoidGradient(z_2)];
+  delta2=delta2(2:end);
+  
+ %step4
+ Theta1_grad=Theta1_grad+delta2'*a_1;
+ Theta2_grad=Theta2_grad+delta3'*a_2;
+ end
 
-
-
-
-
-
-
-
+ %step5
+ Theta1_grad=Theta1_grad/m;
+ Theta2_grad=Theta2_grad/m;
 
 %
 % Part 3: Implement regularization with the cost function and gradients.
