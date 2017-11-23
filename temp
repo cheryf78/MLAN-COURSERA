@@ -23,6 +23,15 @@ computeCentroids
   
   *********************************
   
-  pca.m
-        sigma = (X'*X)/m;
-        [U,S,V] = svd(sigma);
+pca.m
+   sigma = (X'*X)/m;
+   [U,S,V] = svd(sigma);
+        
+projectdata 
+   u=U(:,1:K);
+   Z=X*u;
+    
+recoverdata
+ X_rec = Z*U(:,1:K)';
+    
+    
