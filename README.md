@@ -8,4 +8,16 @@ This course provides a broad introduction to machine learning and statistical pa
   - Logistic regression
   - Multi-class-Classification-and-Neural-Networks
   - Neural-Networks-Learning
+  - Support Vector Machines
+
+- Unsupervised learning
+  - Kmeans clustering and PCA
+  - Anomaly detection and Recommender systems
+  - Dimensionality reduction
+  - Kernel methods 
+
+- Learning theory
+  - Bias/variance tradeoffs
+  - Regularization methods 
+  - Large margins
 
